@@ -28,6 +28,9 @@ defmodule AutoFormatter.MixProject do
   end
 
   defp escript do
-    [main_module: AutoFormatter.CLI]
+    [
+      main_module: AutoFormatter.CLI,
+      path: "_build/autoformatter"
+    ]
   end
 end
