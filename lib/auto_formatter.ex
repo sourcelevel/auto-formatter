@@ -3,5 +3,7 @@ defmodule AutoFormatter do
   Documentation for `AutoFormatter`.
   """
 
+  @version Mix.Project.config()[:version]
 
+  def version(), do: @version
 end
