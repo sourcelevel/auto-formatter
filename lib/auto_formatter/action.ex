@@ -16,9 +16,20 @@ defmodule AutoFormatter.Action do
     case File.write(@pre_commit_hook_path, @pre_commit_hook_content) do
       :ok ->
         File.chmod(@pre_commit_hook_path, 0o755)
+
       _ ->
         :error
     end
+  end
+
+  def perform(:_format) do
+    {output, 0} = System.cmd("git", ["diff", "--name-only"])
+
+    files_list =
+      output
+      |> String.replace("\n", " ")
+
+    System.cmd("mix", ["format", files_list])
   end
 
   def perform(action) do
