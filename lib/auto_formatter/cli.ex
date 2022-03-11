@@ -1,7 +1,7 @@
 defmodule AutoFormatter.CLI do
   alias AutoFormatter.Action
 
-  @actions ~w[init enable disable version]
+  @actions ~w[init enable disable version _format]
 
   def main(args \\ []) do
     args
