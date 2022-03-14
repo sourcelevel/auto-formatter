@@ -27,9 +27,14 @@ defmodule AutoFormatter.Action do
 
     files_list =
       output
-      |> String.replace("\n", " ")
+      |> String.split("\n")
+      |> Enum.reverse()
+      |> tl()
+      |> Enum.reverse()
 
-    System.cmd("mix", ["format", files_list])
+    {_output, 0} = System.cmd("mix", ["format" | files_list])
+
+    "Formatted successfully"
   end
 
   def perform(action) do
