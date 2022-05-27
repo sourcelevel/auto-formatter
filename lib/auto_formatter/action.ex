@@ -6,20 +6,14 @@ defmodule AutoFormatter.Action do
     autoformatter _format
   """
 
-  @pre_commit_hook_path "./.git/hooks/pre-commit"
+  alias AutoFormatter.HookManager
 
   def perform(:version) do
     AutoFormatter.version()
   end
 
   def perform(:init) do
-    case File.write(@pre_commit_hook_path, @pre_commit_hook_content) do
-      :ok ->
-        File.chmod(@pre_commit_hook_path, 0o755)
-
-      _ ->
-        :error
-    end
+    HookManager.create("pre-commit", @pre_commit_hook_content)
   end
 
   def perform(:_format) do
