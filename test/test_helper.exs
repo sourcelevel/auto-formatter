@@ -1,3 +1,3 @@
-Mox.defmock(AutoFormatter.HookManagerMock, for: AutoFormatter.HookManagerBehaviour)
+Mox.defmock(AutoFormatter.HookManagerBehaviourMock, for: AutoFormatter.HookManagerBehaviour)
 
 ExUnit.start()
