@@ -13,7 +13,7 @@ defmodule AutoFormatter.Action do
   end
 
   def perform(:init) do
-    HookManager.create("pre-commit", @pre_commit_hook_content)
+    hook_manager().create("pre-commit", @pre_commit_hook_content)
   end
 
   def perform(:_format) do
@@ -32,6 +32,10 @@ defmodule AutoFormatter.Action do
   end
 
   def perform(action) do
-    IO.inspect("Performing action: #{action}")
+    IO.puts("Performing action: #{action}")
+  end
+
+  defp hook_manager do
+    Application.get_env(:auto_formatter, :hook_manager, HookManager)
   end
 end
