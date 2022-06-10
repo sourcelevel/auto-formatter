@@ -6,7 +6,7 @@ defmodule AutoFormatter.Action do
     autoformatter _format
   """
 
-  alias AutoFormatter.HookManager
+  alias AutoFormatter.{CommandRunner, HookManager}
 
   def perform(:version) do
     AutoFormatter.version()
@@ -17,7 +17,7 @@ defmodule AutoFormatter.Action do
   end
 
   def perform(:_format) do
-    {output, 0} = System.cmd("git", ["diff", "--name-only"])
+    {:ok, output} = command_runner().run("git", ["diff", "--name-only"])
 
     files_list =
       output
@@ -26,7 +26,7 @@ defmodule AutoFormatter.Action do
       |> tl()
       |> Enum.reverse()
 
-    {_output, 0} = System.cmd("mix", ["format" | files_list])
+    {:ok, _output} = command_runner().run("mix", ["format" | files_list])
 
     "Formatted successfully"
   end
@@ -37,5 +37,9 @@ defmodule AutoFormatter.Action do
 
   defp hook_manager do
     Application.get_env(:auto_formatter, :hook_manager, HookManager)
+  end
+
+  defp command_runner do
+    Application.get_env(:auto_formatter, :command_runner, CommandRunner)
   end
 end
