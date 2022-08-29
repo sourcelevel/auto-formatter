@@ -1,7 +1,7 @@
 # AutoFormatter
 
 This package have the responsibility to run `mix format`
-after **EVERY** commit to ensure that you modified code
+before **EVERY** commit to ensure that you modified code
 is formated.
 
 ## Installation
