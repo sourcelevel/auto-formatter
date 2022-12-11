@@ -8,6 +8,8 @@ defmodule AutoFormatter.Action do
 
   alias AutoFormatter.{CommandRunner, HookManager}
 
+  @elixir_extensions [".ex", ".exs"]
+
   def perform(:version) do
     AutoFormatter.version()
   end
@@ -22,6 +24,7 @@ defmodule AutoFormatter.Action do
     files_list =
       output
       |> String.split("\n")
+      |> Enum.filter(&String.contains?(&1, @elixir_extensions))
       |> Enum.reverse()
       |> tl()
       |> Enum.reverse()
